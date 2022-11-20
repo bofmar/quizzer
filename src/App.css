@@ -37,7 +37,7 @@ button:active {
 
 .App {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   color: var(--blue);
   position: relative;
 }
@@ -72,5 +72,41 @@ button:active {
 
 .intro--wrapper > h1 {
   font-size: 2rem;
+}
+
+.questions--wrapper{
+  width: 70%;
+  font-family: 'Karla', sans-serif;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.questions--wrapper > div {
+  width: 100%;
+  border-bottom: 2px solid var(--light-blue);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.questions--wrapper h1 {
+  font-size: 1.3rem;
+  max-width: 40ch;
+}
+
+.answers {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.question--button {
+  background-color: white;
+  color: var(--blue);
+  min-width: 80px;
+  min-height: 30px;
+  border: 2px solid var(--light-purple);
+  margin-bottom: 15px;
 }
 
