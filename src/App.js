@@ -38,6 +38,11 @@ function App() {
     setGameOver({ finished: true, score: tally })
   }
 
+  function restartGame() {
+    setStartGame(false);
+    setGameOver({ finished: false, score: 0 });
+  }
+
   return (
     <div className="App center--content">
       <div className='decoration decoration--left'></div>
@@ -47,7 +52,8 @@ function App() {
           {questions.map(question => <Question key={question.id} question={question} registerQuestion={registerQuestion} />)}
           <div className='center--content' id='button--wrapper'>
             {gameOver.finished && <h1>You scored {gameOver.score}/5 answers</h1>}
-            <button onClick={checkQuestions}>Check answers</button>
+            {gameOver.finished && <button onClick={restartGame}>Play Again</button>}
+            {!gameOver.finished && <button onClick={checkQuestions}>Check answers</button>}
           </div>
         </div> :
         <IntroScreen startQuiz={startQuiz} />}
