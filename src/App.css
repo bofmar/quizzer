@@ -110,3 +110,7 @@ button:active {
   margin-bottom: 15px;
 }
 
+#button--wrapper {
+  border-bottom: none;
+  margin-top: 20px;
+}

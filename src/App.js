@@ -28,7 +28,9 @@ function App() {
       {startGame ?
         <div className='questions--wrapper center--content'>
           {questions.map(question => <Question key={question.id} question={question} />)}
-          <button>Check answers</button>
+          <div className='center--content' id='button--wrapper'>
+            <button>Check answers</button>
+          </div>
         </div> :
         <IntroScreen startQuiz={startQuiz} />}
     </div>
