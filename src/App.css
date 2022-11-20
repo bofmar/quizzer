@@ -3,6 +3,8 @@
 :root {
   --blue: #293264;
   --light-purple: #4D5B9E;
+  --light-yellow: #FFFAD1;
+  --light-blue: #DEEBF8;
 }
 
 button {
@@ -37,6 +39,27 @@ button:active {
   width: 100vw;
   height: 100vh;
   color: var(--blue);
+  position: relative;
+}
+
+.decoration{
+  width: 300px;
+  height: 300px;
+  position: absolute;
+}
+
+.decoration--left {
+  border-radius: 30% 70% 22% 78% / 65% 89% 11% 35%;
+  bottom: -10vh;
+  left: -150px;
+  background-color: var(--light-blue);
+}
+
+.decoration--right {
+  border-radius: 30% 70% 71% 29% / 57% 51% 49% 43%; 
+  top: -10vh;
+  right: -150px;
+  background-color: var(--light-yellow);
 }
 
 .intro--wrapper {
