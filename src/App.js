@@ -7,6 +7,7 @@ import './App.css';
 function App() {
   const [startGame, setStartGame] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [gameOver, setGameOver] = useState({ finished: false, score: 0 });
 
   function startQuiz() {
     setStartGame(true);
@@ -21,12 +22,21 @@ function App() {
   }, [startGame]);
 
   function registerQuestion(event, questionId, answer) {
-    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answer: answer } : { ...q, answer: '' }));
+    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answer: answer } : q));
     const allButtons = event.target.parentNode.childNodes;
     allButtons.forEach(button => button.classList.remove('selected'));
     event.target.classList.add('selected');
   }
 
+  function checkQuestions() {
+    let tally = 0;
+    questions.forEach(question => {
+      if (question.answer === question.correct_answer) {
+        tally++;
+      }
+    });
+    setGameOver({ finished: true, score: tally })
+  }
 
   return (
     <div className="App center--content">
@@ -36,7 +46,8 @@ function App() {
         <div className='questions--wrapper center--content'>
           {questions.map(question => <Question key={question.id} question={question} registerQuestion={registerQuestion} />)}
           <div className='center--content' id='button--wrapper'>
-            <button>Check answers</button>
+            {gameOver.finished && <h1>You scored {gameOver.score}/5 answers</h1>}
+            <button onClick={checkQuestions}>Check answers</button>
           </div>
         </div> :
         <IntroScreen startQuiz={startQuiz} />}
