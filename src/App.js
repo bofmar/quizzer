@@ -21,7 +21,9 @@ function App() {
   }, [startGame]);
 
   function registerQuestion(event, questionId, answer) {
-    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answer: answer } : q));
+    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answer: answer } : { ...q, answer: '' }));
+    const allButtons = event.target.parentNode.childNodes;
+    allButtons.forEach(button => button.classList.remove('selected'));
     event.target.classList.add('selected');
   }
 
