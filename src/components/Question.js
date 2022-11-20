@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function Question({ question }) {
-  const answers = [question.correct_answer, ...question.incorrect_answers];
+export default function Question({ question, registerQuestion }) {
+  const [answers, setAnswers] = useState(shuffle([question.correct_answer, ...question.incorrect_answers]));
 
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -16,7 +16,7 @@ export default function Question({ question }) {
     <div>
       <h1 dangerouslySetInnerHTML={{ __html: question.question }}></h1>
       <div className='answers'>
-        {shuffle(answers).map(answer => <button className='question--button' dangerouslySetInnerHTML={{ __html: answer }} key={answer}></button>)}
+        {answers.map(answer => <button className='question--button' dangerouslySetInnerHTML={{ __html: answer }} key={answer} onClick={(event) => registerQuestion(event, question.id, answer)}></button>)}
       </div>
     </div>
   )

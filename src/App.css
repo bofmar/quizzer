@@ -5,6 +5,7 @@
   --light-purple: #4D5B9E;
   --light-yellow: #FFFAD1;
   --light-blue: #DEEBF8;
+  --light-pink: #D6DBF5;
 }
 
 button {
@@ -108,6 +109,10 @@ button:active {
   min-height: 30px;
   border: 2px solid var(--light-purple);
   margin-bottom: 15px;
+}
+
+.selected {
+  background-color: var(--light-pink);
 }
 
 #button--wrapper {

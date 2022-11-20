@@ -16,10 +16,15 @@ function App() {
     (async function getQuiz() {
       const response = await fetch('https://opentdb.com/api.php?amount=5');
       const data = await response.json();
-      setQuestions(data.results.map(res => ({ ...res, id: nanoid() })));
+      setQuestions(data.results.map(res => ({ ...res, id: nanoid(), answer: '' })));
     })();
-
   }, [startGame]);
+
+  function registerQuestion(event, questionId, answer) {
+    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answer: answer } : q));
+    event.target.classList.add('selected');
+  }
+
 
   return (
     <div className="App center--content">
@@ -27,7 +32,7 @@ function App() {
       <div className='decoration decoration--right'></div>
       {startGame ?
         <div className='questions--wrapper center--content'>
-          {questions.map(question => <Question key={question.id} question={question} />)}
+          {questions.map(question => <Question key={question.id} question={question} registerQuestion={registerQuestion} />)}
           <div className='center--content' id='button--wrapper'>
             <button>Check answers</button>
           </div>
