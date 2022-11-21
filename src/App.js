@@ -48,9 +48,11 @@ function App() {
   function checkQuestions() {
     let tally = 0;
     questions.forEach(question => {
-      if (question.answer === question.correct_answer) {
-        tally++;
-      }
+      question.answers.map(a => {
+        if (a.isSelected && a.isCorrect) {
+          tally++;
+        }
+      })
     });
     setGameOver({ finished: true, score: tally })
   }
