@@ -36,9 +36,11 @@ function App() {
         {
           answerText: res.correct_answer,
           isSelected: false,
-          isCorrect: true
+          isCorrect: true,
+          setGreen: false,
+          setRed: false
         },
-        ...res.incorrect_answers.map(answer => ({ answerText: answer, isSelected: false, isCorrect: false }))
+        ...res.incorrect_answers.map(answer => ({ answerText: answer, isSelected: false, isCorrect: false, setGreen: false, setRed: false }))
       ]),
     }
   }
@@ -53,6 +55,12 @@ function App() {
       question.answers.map(a => {
         if (a.isSelected && a.isCorrect) {
           tally++;
+        }
+        if (a.isCorrect) {
+          a.setGreen = true;
+        }
+        if (a.isSelected && !a.isCorrect) {
+          a.setRed = true;
         }
       })
     });
@@ -80,7 +88,7 @@ function App() {
       <div className='decoration decoration--right'></div>
       {startGame ?
         <div className='questions--wrapper center--content'>
-          {questions.map(question => <Question key={question.id} question={question} registerQuestion={registerQuestion} />)}
+          {questions.map(question => <Question key={question.id} question={question} finished={gameOver.finished} registerQuestion={registerQuestion} />)}
           <div className='center--content' id='button--wrapper'>
             {gameOver.finished && <h1>You scored {gameOver.score}/5 answers</h1>}
             {gameOver.finished && <button onClick={restartGame}>Play Again</button>}

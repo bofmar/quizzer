@@ -6,6 +6,8 @@
   --light-yellow: #FFFAD1;
   --light-blue: #DEEBF8;
   --light-pink: #D6DBF5;
+  --light-green: #94D7A2;
+  --light-red: #F8BCBC;
 }
 
 button {
@@ -113,6 +115,21 @@ button:active {
 
 .selected {
   background-color: var(--light-pink);
+}
+
+.correct {
+  background-color: var(--light-green);
+  border: none;
+  pointer-events: none;
+}
+
+.incorrect {
+  background-color: var(--light-red);
+}
+
+.fade {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 #button--wrapper {
