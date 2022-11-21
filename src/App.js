@@ -60,6 +60,7 @@ function App() {
   function restartGame() {
     setStartGame(false);
     setGameOver({ finished: false, score: 0 });
+    shouldFetch.current = true;
   }
 
   function shuffle(arr) {
