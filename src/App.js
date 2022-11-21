@@ -19,20 +19,7 @@ function App() {
       (async function getQuiz() {
         const response = await fetch('https://opentdb.com/api.php?amount=5');
         const data = await response.json();
-        setQuestions(data.results.map(res => {
-          return {
-            ...res,
-            id: nanoid(),
-            answers: shuffle([
-              {
-                answerText: res.correct_answer,
-                isSelected: false,
-                isCorrect: true
-              },
-              ...res.incorrect_answers.map(answer => ({ answerText: answer, isSelected: false, isCorrect: false }))
-            ]),
-          }
-        }));
+        setQuestions(data.results.map(res => createNewQuestion(res)));
       })();
 
       return () => {
@@ -40,6 +27,21 @@ function App() {
       }
     }
   }, [startGame]);
+
+  function createNewQuestion(res) {
+    return {
+      ...res,
+      id: nanoid(),
+      answers: shuffle([
+        {
+          answerText: res.correct_answer,
+          isSelected: false,
+          isCorrect: true
+        },
+        ...res.incorrect_answers.map(answer => ({ answerText: answer, isSelected: false, isCorrect: false }))
+      ]),
+    }
+  }
 
   function registerQuestion(questionId, answer) {
     setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answers: q.answers.map(a => ({ ...a, isSelected: a.answerText === answer })) } : q));
@@ -72,10 +74,6 @@ function App() {
 
   }
 
-  function debug() {
-    console.log(questions[0].answers);
-  }
-
   return (
     <div className="App center--content">
       <div className='decoration decoration--left'></div>
@@ -87,7 +85,6 @@ function App() {
             {gameOver.finished && <h1>You scored {gameOver.score}/5 answers</h1>}
             {gameOver.finished && <button onClick={restartGame}>Play Again</button>}
             {!gameOver.finished && <button onClick={checkQuestions}>Check answers</button>}
-            <button onClick={debug}>debug</button>
           </div>
         </div> :
         <IntroScreen startQuiz={startQuiz} />}
