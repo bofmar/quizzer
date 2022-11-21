@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { nanoid } from 'nanoid';
 import IntroScreen from './components/IntoScreen';
 import Question from './components/Question';
 import './App.css';
 
 function App() {
+  const shouldFetch = useRef(true);
   const [startGame, setStartGame] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [gameOver, setGameOver] = useState({ finished: false, score: 0 });
@@ -14,11 +15,18 @@ function App() {
   }
 
   useEffect(() => {
-    (async function getQuiz() {
-      const response = await fetch('https://opentdb.com/api.php?amount=5');
-      const data = await response.json();
-      setQuestions(data.results.map(res => ({ ...res, id: nanoid(), answer: '' })));
-    })();
+    if (shouldFetch.current) {
+      (async function getQuiz() {
+        const response = await fetch('https://opentdb.com/api.php?amount=5');
+        const data = await response.json();
+        setQuestions(data.results.map(res => ({ ...res, id: nanoid(), answer: '' })));
+        console.log(questions);
+      })();
+
+      return () => {
+        shouldFetch.current = false;
+      }
+    }
   }, [startGame]);
 
   function registerQuestion(event, questionId, answer) {
