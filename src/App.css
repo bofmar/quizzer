@@ -71,6 +71,7 @@ button:active {
   font-family: 'Karla', sans-serif;
   flex-direction: column;
   justify-content: space-evenly;
+  gap: 40px;
 }
 
 .intro--wrapper > h1 {
