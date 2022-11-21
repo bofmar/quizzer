@@ -41,11 +41,8 @@ function App() {
     }
   }, [startGame]);
 
-  function registerQuestion(event, questionId, answer) {
-    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answer: answer } : q));
-    const allButtons = event.target.parentNode.childNodes;
-    allButtons.forEach(button => button.classList.remove('selected'));
-    event.target.classList.add('selected');
+  function registerQuestion(questionId, answer) {
+    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, answers: q.answers.map(a => ({ ...a, isSelected: a.answerText === answer })) } : q));
   }
 
   function checkQuestions() {
