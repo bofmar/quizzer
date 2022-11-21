@@ -23,14 +23,14 @@ function App() {
           return {
             ...res,
             id: nanoid(),
-            answers: [
+            answers: shuffle([
               {
                 answerText: res.correct_answer,
                 isSelected: false,
                 isCorrect: true
               },
               ...res.incorrect_answers.map(answer => ({ answerText: answer, isSelected: false, isCorrect: false }))
-            ],
+            ]),
           }
         }));
       })();
@@ -61,6 +61,15 @@ function App() {
   function restartGame() {
     setStartGame(false);
     setGameOver({ finished: false, score: 0 });
+  }
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+
   }
 
   function debug() {
